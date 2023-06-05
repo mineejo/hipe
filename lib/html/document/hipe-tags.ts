@@ -34,9 +34,6 @@ export class HipeTags {
    *   https://www.example.com
    * </div>
    * ```
-   *
-   * **Important:** do not put <insert> in the attributes of other elements - it will not work.
-   * Use [Container](https://mineejo.github.io/hipe/classes/HipeTags.html#insertContainer) to create such a store.
    */
   insertStore(): HipeTags {
     if (!Hipe.document) return this;

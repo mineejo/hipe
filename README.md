@@ -49,6 +49,39 @@ For example, the config store can be listed above
 all other elements in `<body>`, so you don't have to search for it
 amongst the many elements and be aware of the information used.
 
+[//]: # (@formatter:off)
+
+>```html
+><store name="...">...values...</store>
+>```
+> **Tag:** store `(common type)` \
+> **Contains:** values `(optional)` \
+> **Attributes:** name `(required)`
+
+[//]: # (@formatter:on )
+
+[//]: # (@formatter:off)
+
+>```html
+><value name="...">...value...</value>
+>```
+> **Tag:** value `(common type)` \
+> **Contains:** value `(optional)` \
+> **Attributes:** name `(required)`
+
+[//]: # (@formatter:on )
+
+[//]: # (@formatter:off)
+
+>```html
+><insert value="..." store="..."></insert>
+>```
+> **Tag:** insert `(functional type)` \
+> **Contains:** nothing \
+> **Attributes:** value `(name)` `(required)`, store `(name)` `(required)`
+
+[//]: # (@formatter:on )
+
 **Example:**
 
 [//]: # (@formatter:off)
@@ -86,6 +119,28 @@ Use [Container](#container) to create such a store.
 
 The container is similar to a [store](#store), but contains HTML elements instead of values. It is useful when you can
 avoid duplicate elements or nested constructions.
+
+[//]: # (@formatter:off)
+
+>```html
+><container name="...">...elements...</container>
+>```
+> **Tag:** container `(common type)` \
+> **Contains:** elements `(optional)` \
+> **Attributes:** name `(required)`
+
+[//]: # (@formatter:on )
+
+[//]: # (@formatter:off)
+
+>```html
+><insert container="..."></insert>
+>```
+> **Tag:** insert `(functional type)` \
+> **Contains:** nothing \
+> **Attributes:** container `(name)` `(required)`
+
+[//]: # (@formatter:on )
 
 **Example:**
 

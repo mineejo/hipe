@@ -1,0 +1,50 @@
+# Lib
+/lib/
+
+# Bin
+/bin/
+
+# Ignores
+.gitignore
+.prettierignore
+
+# TypeScript
+tsconfig.json
+
+# Dependency directories
+/node_modules/
+
+# TypeScript cache
+dist/tsconfig.tsbuildinfo
+
+# Yarn
+/.yarn/
+yarn.lock
+.yarnrc.yml
+
+# Generate docs
+/docs/
+
+# Jetbrains
+/.idea/
+
+# Husky
+/.husky/
+
+# Commits
+.commitlintrc.json
+.versionrc.json
+
+# GitHub
+/.github/
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+SECURITY.md
+.gitattributes
+
+# Jest
+jest.config.json
+
+# ESLint
+.eslintrc.json

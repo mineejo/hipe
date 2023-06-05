@@ -1,0 +1,13 @@
+# Dependency directories
+/node_modules/
+
+# Yarn
+/.yarn/
+
+# Generate docs
+/docs/
+
+# Jetbrains
+/.idea/
+
+CHANGELOG.md

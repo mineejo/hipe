@@ -1,0 +1,50 @@
+name: npm-publish
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: |
+          if [ -e yarn.lock ]; then
+          yarn install --immutable  
+          elif [ -e package-lock.json ]; then
+          npm ci
+          else
+          npm i
+          fi
+      - name: Run test
+        run: npm test
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - name: Install dependencies
+        run: |
+          if [ -e yarn.lock ]; then
+          yarn install --immutable
+          elif [ -e package-lock.json ]; then
+          npm ci
+          else
+          npm i
+          fi
+      - name: Build tsc
+        run: yarn build:tsc
+      - name: Publish package
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}

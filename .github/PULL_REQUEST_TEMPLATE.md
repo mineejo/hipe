@@ -1,0 +1,4 @@
+- [ ] Commit message named according to [contributing guide](../CONTRIBUTING.md "contributing guide")
+- [ ] `yarn lint` - Successfully
+- [ ] `yarn test` - Successfully
+- [ ] `yarn format` - Done

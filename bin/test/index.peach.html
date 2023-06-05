@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <store name="base">
+      <value name="standard">Hello world!</value>
+    </store>
+    <container name="msg">
+      <span>Hello world!</span>
+    </container>
+    <div>
+      <insert container="msg"></insert>
+
+      <div>
+        <!--    Simple comment    -->
+        <insert store="base" value="standard"></insert>
+      </div>
+    </div>
+  </body>
+</html>

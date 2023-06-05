@@ -14,6 +14,9 @@ Install with `npm install hipe --save-dev`.
 
 ## Usage and API
 
+To specify that the HTML file is a modification of Hipe, use the `.hipe.html` extension, e.g. `index.hipe.html` will be
+generated in `index.html`. Additional extensions can be specified before - `index.test.hipe.html`.
+
 ```shell
 hipe <dir>
 

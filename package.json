@@ -1,6 +1,6 @@
 {
   "name": "hipe",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "mineejo <mineejo.dev@gmail.com> (https://github.com/mineejo)",
   "description": "Hipe is a minimalistic HTML5 preprocessor that complements the necessary practices",
   "type": "module",

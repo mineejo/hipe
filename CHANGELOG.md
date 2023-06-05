@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/mineejo/hipe/compare/v1.1.0...v1.2.0) (2023-06-05)
+
+
+### Features
+
+* limit description of methods in API documentation to basic implementation ([8d7f1e9](https://github.com/mineejo/hipe/commits/8d7f1e98609dcc7207233b2545868bfb29a850db))
+* write the tags in more detail in README.md ([dc6f384](https://github.com/mineejo/hipe/commits/dc6f384410f28a50693a374a032996e3fade427a))
+
+
+### Bug Fixes
+
+* the references in the documentation ([b4f7cf9](https://github.com/mineejo/hipe/commits/b4f7cf93b89d3f47c56fb98bc19d6b4378a7d553))
+
 ## [1.1.0](https://github.com/mineejo/hipe/compare/v1.0.3...v1.1.0) (2023-06-05)
 
 

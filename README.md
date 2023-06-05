@@ -5,7 +5,7 @@
 
 [DOCS_URL]: https://mineejo.github.io/hipe/
 
-[NPM_URL]: https://npmjs.org/package/@mineejo/hipe
+[NPM_URL]: https://npmjs.org/package/hipe
 
 Hipe is a minimalistic HTML5 preprocessor that complements the necessary practices.
 Hipe will help when you just need to use HTML and frameworks or more complex preprocessors are unnecessary.

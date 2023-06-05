@@ -36,7 +36,7 @@ export class HipeTags {
    * ```
    *
    * **Important:** do not put <insert> in the attributes of other elements - it will not work.
-   * Use [Container](https://mineejo.github.io/hipe/docs/classes/HipeTags.html#insertContainer) to create such a store.
+   * Use [Container](https://mineejo.github.io/hipe/classes/HipeTags.html#insertContainer) to create such a store.
    */
   insertStore(): HipeTags {
     if (!Hipe.document) return this;
@@ -93,7 +93,7 @@ export class HipeTags {
   }
 
   /**
-   * The container is similar to a [store](https://mineejo.github.io/hipe/docs/classes/HipeTags.html#insertStore), but contains
+   * The container is similar to a [store](https://mineejo.github.io/hipe/classes/HipeTags.html#insertStore), but contains
    * HTML elements instead of values. It is useful when you can
    * avoid duplicate elements or nested constructions.
    *

@@ -1,5 +1,6 @@
 import { JSDOM } from "jsdom";
 import { HipeTags } from "./hipe-tags.js";
+import { wrap } from "multitry";
 
 /**
  * The Hipe class creates a new JSDOM document and provides methods to modify it.
@@ -25,7 +26,16 @@ export class Hipe {
 
     const hipeTags: HipeTags = new HipeTags();
     for (const method of methods) {
-      hipeTags[method]();
+      // "wrap" handles a type error when the class method
+      // is a getter or setter that is not a function, but is a method.
+      const err = wrap({
+        try: () => hipeTags[method](),
+        catch: (e) => e,
+      });
+
+      if (err instanceof Error && !err.message.includes("is not a function")) {
+        console.error(err);
+      }
     }
   }
 }

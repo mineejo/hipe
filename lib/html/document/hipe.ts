@@ -15,7 +15,17 @@ export class Hipe {
     return Hipe.document;
   }
 
-  modifyDocument() {
-    new HipeTags().insertContainer().insertStore();
+  /**
+   * Automatically runs methods of a modifier
+   * class that modifies a document of that class.
+   */
+  modifyDocument(): void {
+    const methods: string[] = Object.getOwnPropertyNames(HipeTags.prototype);
+    methods.shift(); // removes the class constructor.
+
+    const hipeTags: HipeTags = new HipeTags();
+    for (const method of methods) {
+      hipeTags[method]();
+    }
   }
 }

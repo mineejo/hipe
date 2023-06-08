@@ -8,33 +8,8 @@ type Mods = {
 export class Parser {
   private readonly _document: Document | undefined;
   private mods: Mods = {
-    store: () => {
-      /*
-       * **Input:**
-       * ```html
-       * <store name="config">
-       *   <value name="version">1.0.0</value>
-       *   <value name="name">Hello world!</value>
-       *   <value name="link">https://www.example.com</value>
-       * </store>
-       *
-       * <div>
-       *   A version of something:
-       *   <insert value="version" store="config"></insert>, more at
-       *   <insert value="link" store="config"></insert>
-       * </div>
-       * ```
-       *
-       * **Output:**
-       * ```html
-       * <div>
-       *   A version of something:
-       *   1.0.0, more at
-       *   https://www.example.com
-       * </div>
-       * ```
-       */
-
+    // https://github.com/mineejo/hipe#store
+    insertStore: () => {
       if (!this._document) return this;
 
       const tag = {
@@ -87,29 +62,8 @@ export class Parser {
       for (const element of removeList) element.remove();
       return this;
     },
-    container: () => {
-      /**
-       * **Input:**
-       *
-       * ```html
-       * <container name="firstLink">
-       *   <a href="https://example.org/">first</a>
-       * </container>
-       *
-       * <div>
-       *   <insert container="firstLink"></insert>
-       * </div>
-       * ```
-       *
-       * **Output:**
-       *
-       * ```html
-       * <div>
-       *   <a href="https://example.org/">first</a>
-       * </div>
-       * ```
-       */
-
+    // https://github.com/mineejo/hipe#container
+    insertContainer: () => {
       if (!this._document) return this;
 
       const tag = {
@@ -160,8 +114,8 @@ export class Parser {
     },
   };
 
-  constructor(html: string) {
-    this._document = new JSDOM(html).window._document;
+  constructor(str: string) {
+    this._document = new JSDOM(str).window._document;
 
     Object.keys(this.mods).forEach((modName: string): void => {
       wrap({
@@ -171,7 +125,10 @@ export class Parser {
     });
   }
 
-  get document(): Document | undefined {
-    return this._document;
+  htmlToString(): string {
+    const html: string | undefined =
+      this._document?.documentElement.outerHTML.toString();
+    const blankStrings = /^\s*\n/gm;
+    return "<!DOCTYPE html>\n" + html?.replace(blankStrings, "");
   }
 }

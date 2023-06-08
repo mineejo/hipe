@@ -4,11 +4,11 @@ import yargs, { ArgumentsCamelCase, Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import {
   HipeFinder,
-  removePathFile,
   removeHipeExtension,
+  removePathFile,
 } from "../lib/fs/hipe-finder.js";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { Hipe } from "../lib/index.js";
+import { Parser } from "../lib/index.js";
 import { Dyer } from "../lib/terminal/dyer.js";
 import { join } from "path";
 
@@ -48,31 +48,21 @@ yargs(hideBin(process.argv))
       }
 
       for (const file of files) {
-        const text: string = readFileSync(file, "utf8");
+        let text: string = readFileSync(file, "utf8");
         if (!text) continue;
 
-        const p: Hipe = new Hipe(text);
-        p.modifyDocument();
-        // If it contains a string, then <head>, <body>, etc.
-        const html: string | undefined = p.document?.documentElement.outerHTML;
-        if (!html) continue;
-
         const commentRegExp = /<!--(.*?)-->/gm;
-        const blankString = /^\s*\n/gm;
-        const document =
-          "<!DOCTYPE html>\n" +
-          (comment ? html.replace(commentRegExp, "") : html).replace(
-            blankString,
-            ""
-          );
+        text = comment ? text.replace(commentRegExp, "") : text;
+
+        const html: string = new Parser(text).htmlToString();
 
         if (output) {
           writeFileSync(
             join(output, removePathFile(removeHipeExtension(file))),
-            document
+            html
           );
         } else {
-          writeFileSync(removeHipeExtension(file), document);
+          writeFileSync(removeHipeExtension(file), html);
         }
       }
 

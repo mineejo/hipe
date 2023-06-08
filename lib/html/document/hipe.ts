@@ -3,7 +3,7 @@ import { HipeTags } from "./hipe-tags.js";
 import { wrap } from "multitry";
 
 /**
- * The Hipe class creates a new JSDOM document and provides methods to modify it.
+ * Hipe parses HTML and modifies its elements afterward.
  */
 export class Hipe {
   public static document: Document | undefined;

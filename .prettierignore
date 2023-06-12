@@ -10,4 +10,8 @@
 # Jetbrains
 /.idea/
 
+# Generate output
+/dist/
+/test/
+
 CHANGELOG.md

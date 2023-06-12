@@ -3,6 +3,7 @@
 
 # Generate output
 /dist/
+/test/
 
 # Yarn
 /.yarn/cache/

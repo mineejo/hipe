@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    // ESM | package.json: "engines": { "node": ">=16" }
+    "lib": [
+      "ES2021",
+      "dom"
+    ],
+    "target": "ES2021",
+    "module": "node16",
+    "moduleResolution": "node16",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "alwaysStrict": false,
+    // STRICT | useful strictness without restraint
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    // BUILD
+    "outDir": "test",
+    "composite": false,
+    // OTHER
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "./**/*.test.ts",
+    "./**/*.ts",
+    "./**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules/**/*"
+  ]
+}

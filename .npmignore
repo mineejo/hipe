@@ -43,8 +43,8 @@ CONTRIBUTING.md
 SECURITY.md
 .gitattributes
 
-# Jest
-jest.config.json
+# Generate output
+/test/
 
 # ESLint
 .eslintrc.json

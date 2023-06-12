@@ -6,7 +6,7 @@ function parseHtml(str: string): Document | undefined {
   return new JSDOM(str).window._document;
 }
 
-test("parser: insertStore", (t) => {
+test("insertStore, items are correctly updated", (t) => {
   const parser = new Parser(`
     <div>
       <store name="config">
@@ -26,7 +26,7 @@ test("parser: insertStore", (t) => {
   t.is(div?.innerHTML.includes(content), true);
 });
 
-test("parser: insertContainer", (t) => {
+test("insertContainer, items are correctly updated", (t) => {
   const parser = new Parser(`
     <container name="list">
       List

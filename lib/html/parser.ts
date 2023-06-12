@@ -121,7 +121,7 @@ export class Parser {
   }
 
   /**
-   * @returns {string} Returns the finished HTML document as a string.
+   * @returns {string} The finished HTML document as a string.
    */
   htmlToString(): string {
     const html: string | undefined =

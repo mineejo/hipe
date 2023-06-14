@@ -185,13 +185,10 @@ avoid duplicate elements or nested constructions.
 ```
 [//]: # (@formatter:on )
 
-To use the Hipe parser, use the `Hipe` class.
+To use the Hipe parser, use the `Parser` class.
 
 ```javascript
-const hipe = new Hipe(html);
-hipe.modifyDocument();
-
-const newHtml = hipe.document;
+const newStr = new Parser(str).htmlToString();
 ```
 
 [Read more about API...][DOCS_URL]

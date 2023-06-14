@@ -1,17 +1,14 @@
 # Dependency directories
 /node_modules/
 
-# Yarn
-/.yarn/
-
-# Generate docs
-/docs/
-
-# Jetbrains
-/.idea/
-
 # Generate output
 /dist/
 /test/
-
+/docs/
 CHANGELOG.md
+
+# Yarn
+/.yarn/
+
+# Jetbrains
+/.idea/

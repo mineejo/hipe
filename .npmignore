@@ -1,29 +1,29 @@
-# Lib
+# Source code
 /lib/
-
-# Bin
 /bin/
 
 # Ignores
 .gitignore
 .prettierignore
 
-# TypeScript
+# Configs
 tsconfig.json
+tsconfig.test.json
+.eslintrc.json
+ava.config.js
 
 # Dependency directories
 /node_modules/
 
-# TypeScript cache
+# Generate output
 dist/tsconfig.tsbuildinfo
+/docs/
+/test/
 
 # Yarn
 /.yarn/
 yarn.lock
 .yarnrc.yml
-
-# Generate docs
-/docs/
 
 # Jetbrains
 /.idea/
@@ -42,9 +42,3 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 SECURITY.md
 .gitattributes
-
-# Generate output
-/test/
-
-# ESLint
-.eslintrc.json

@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <title>Title</title>
+    <insert redirect="https://example.com/"></insert>
+    <!-- Delayed redirect -->
+    <insert delay="5" redirect="https://example.com/"></insert>
   </head>
   <body>
     <store name="base">
@@ -15,7 +18,6 @@
       <insert container="msg"></insert>
 
       <div>
-        <!--    Simple comment    -->
         <insert store="base" value="standard"></insert>
       </div>
     </div>

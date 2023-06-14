@@ -82,7 +82,7 @@ amongst the many elements and be aware of the information used.
 
 [//]: # (@formatter:on )
 
-**Example:**
+**Input:**
 
 [//]: # (@formatter:off)
 ```html
@@ -142,7 +142,7 @@ avoid duplicate elements or nested constructions.
 
 [//]: # (@formatter:on )
 
-**Example:**
+**Input:**
 
 [//]: # (@formatter:off)
 ```html
@@ -184,6 +184,43 @@ avoid duplicate elements or nested constructions.
 </div>
 ```
 [//]: # (@formatter:on )
+
+### Redirect
+
+A redirect is a simplified HTML redirect entry that is more visible and readable.
+
+[//]: # (@formatter:off)
+
+>```html
+><insert redirect="..." delay="5"></insert>
+>```
+> **Tag:** insert `(functional type)` \
+> **Contains:** nothing \
+> **Attributes:** redirect `(url)` `(required)`, delay `(seс)` `(optional)`
+
+[//]: # (@formatter:on )
+
+**Input:**
+
+[//]: # (@formatter:off)
+```html
+<insert redirect="https://example.com/"></insert>
+<!-- Delayed redirect -->
+<insert redirect="https://example.com/" delay="5"></insert>
+```
+[//]: # (@formatter:on )
+
+**Output:**
+
+[//]: # (@formatter:off)
+```html
+<meta http-equiv="refresh" content="0; https://example.com/">
+<!-- Delayed redirect -->
+<meta http-equiv="refresh" content="5; https://example.com/">
+```
+[//]: # (@formatter:on )
+
+### API
 
 To use the Hipe parser, use the `Parser` class.
 

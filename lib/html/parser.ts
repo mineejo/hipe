@@ -12,6 +12,36 @@ type Mods = {
 export class Parser {
   private readonly _document: Document | undefined;
   private mods: Mods = {
+    // https://github.com/mineejo/hipe#redirect
+    insertRedirect: () => {
+      if (!this._document) return;
+
+      const data = {
+        tagInsert: "insert",
+        attrRedirect: "redirect",
+        attrDelay: "delay",
+      } as const;
+
+      const elementsForRemoves: Element[] = [];
+
+      const elements = this._document.getElementsByTagName(data.tagInsert);
+      for (let i = 0; i < elements.length; i++) {
+        const element: Element | undefined = elements[i];
+        if (!element) continue;
+        const redirect = element.getAttribute(data.attrRedirect);
+        const minDelay = "0" as const;
+        const redirectDelay = element.getAttribute(data.attrDelay) ?? minDelay;
+        if (redirect) {
+          const meta = this._document.createElement("meta");
+          meta.setAttribute("http-equiv", "refresh");
+          meta.setAttribute("content", `${redirectDelay}; ${redirect}`);
+          this._document.getElementsByTagName("head")[0]?.appendChild(meta);
+          elementsForRemoves.push(element);
+        }
+      }
+
+      for (const element of elementsForRemoves) element.remove();
+    },
     // https://github.com/mineejo/hipe#store
     insertStore: () => {
       if (!this._document) return;

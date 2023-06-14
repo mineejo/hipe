@@ -1,17 +1,15 @@
 import { JSDOM } from "jsdom";
 import { wrap } from "multitry";
 
-type Mods = {
-  [name: string]: () => void;
-};
-
 /**
  * Parser uses a web-like DOM implementation to parses
  * HTML and implements Hipe elements, etc., modifying existing elements.
  */
 export class Parser {
   private readonly _document: Document | undefined;
-  private mods: Mods = {
+  private mods: {
+    [name: string]: () => void;
+  } = {
     // https://github.com/mineejo/hipe#redirect
     insertRedirect: () => {
       if (!this._document) return;
@@ -140,7 +138,7 @@ export class Parser {
   /**
    * @param {string} str - HTML file, HTML strings, etc.
    */
-  constructor(str: string) {
+  public constructor(str: string) {
     this._document = new JSDOM(str).window._document;
 
     Object.keys(this.mods).forEach((modName: string): void => {
@@ -154,7 +152,7 @@ export class Parser {
   /**
    * @returns {string} The finished HTML document as a string.
    */
-  htmlToString(): string {
+  public htmlToString(): string {
     const html: string | undefined =
       this._document?.documentElement.outerHTML.toString();
     const blankStrings = /^\s*\n/gm;

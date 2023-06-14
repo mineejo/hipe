@@ -30,16 +30,16 @@ export class Finder {
   private readonly _dir: string;
   private readonly _foundFiles: string[] = [];
 
-  constructor(dir: string) {
+  public constructor(dir: string) {
     this._dir = dir;
     this.finder(dir);
   }
 
-  get dir() {
+  public get dir() {
     return this._dir;
   }
 
-  get foundFiles(): string[] {
+  public get foundFiles(): string[] {
     return this._foundFiles;
   }
 

@@ -3,15 +3,38 @@
 import yargs, { ArgumentsCamelCase, Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import {
-  HipeFinder,
+  Finder,
+  getFileFromPath,
   removeHipeExtension,
-  removePathFile,
-} from "../lib/fs/hipe-finder.js";
+} from "../lib/fs/finder.js";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { Parser } from "../lib/index.js";
 import { Dyer } from "../lib/terminal/dyer.js";
 import { join } from "path";
 
+function getCommentParam(argv: string[]): boolean {
+  return argv.includes("-C") || argv.includes("--comment");
+}
+
+function getOutputParam(argv: string[]): string | undefined {
+  const index: number = argv.indexOf("--output");
+  if (index < 0) return;
+
+  const output: string | undefined = argv.at(index + 1);
+  if (!output) {
+    console.error(
+      `${Dyer.strToRed("×")} OPTION: ${Dyer.str(
+        "No path",
+        true
+      )} is specified for the ${Dyer.strToYellow(`--output`)} option`
+    );
+    return;
+  }
+
+  return output;
+}
+
+// noinspection XmlDeprecatedElement,HtmlDeprecatedTag
 yargs(hideBin(process.argv))
   .command(
     "$0 <dir>",
@@ -24,52 +47,45 @@ yargs(hideBin(process.argv))
       });
     },
     ({ dir }: ArgumentsCamelCase<{ dir: string }>) => {
-      const hipeFinder = new HipeFinder(dir);
-      const files: string[] = hipeFinder.foundFiles;
+      const files: string[] = new Finder(dir).foundFiles;
       if (!files) return;
 
-      const argv: string[] = process.argv;
-
-      // Leave comments in the output
-      const comment = !argv.includes("-C") && !argv.includes("--comment");
-
-      let output: string | undefined;
-      const outputIndex = argv.indexOf("--output");
-      if (outputIndex >= 0) {
-        output = argv.at(outputIndex + 1);
-        if (!output)
-          return console.error(
-            `${Dyer.strToRed("×")} OPTION: ${Dyer.str(
-              "No path",
-              true
-            )} is specified for the ${Dyer.strToYellow(`--output`)} option`
-          );
-        if (!existsSync(output)) mkdirSync(output, { recursive: true });
+      const output: string | undefined = getOutputParam(process.argv);
+      if (output && !existsSync(output)) {
+        // Creates missing directories from the output path.
+        mkdirSync(output, { recursive: true });
       }
 
+      let countGenerated = 0;
       for (const file of files) {
-        let text: string = readFileSync(file, "utf8");
-        if (!text) continue;
+        let content: string = readFileSync(file, "utf8");
+        if (!content) continue;
 
         const commentRegExp = /<!--(.*?)-->/gm;
-        text = comment ? text.replace(commentRegExp, "") : text;
+        if (!getCommentParam(process.argv)) {
+          // Removes HTML comments because of a false parameter.
+          content = content.replace(commentRegExp, "");
+        }
 
-        const html: string = new Parser(text).htmlToString();
+        const newContent: string = new Parser(content).htmlToString();
+        if (newContent == content) continue;
 
         if (output) {
-          writeFileSync(
-            join(output, removePathFile(removeHipeExtension(file))),
-            html
-          );
+          const path = join(output, getFileFromPath(removeHipeExtension(file)));
+          writeFileSync(path, newContent);
         } else {
-          writeFileSync(removeHipeExtension(file), html);
+          writeFileSync(removeHipeExtension(file), newContent);
         }
+
+        countGenerated++;
       }
 
-      // The format of the message follows the CPO format.
+      /* The format of the message follows the CPO format.
+       * https://github.com/mineejo/cpo
+       */
       console.log(
         `${Dyer.strToGreen("✓")} HIPE: ${Dyer.strToMagenta(
-          files.length.toString()
+          countGenerated.toString()
         )} HTML files were ${Dyer.str("generated", true)}` +
           (output ? ` (${output})` : "")
       );

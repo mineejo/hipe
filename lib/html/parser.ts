@@ -14,7 +14,7 @@ export class Parser {
   private mods: Mods = {
     // https://github.com/mineejo/hipe#store
     insertStore: () => {
-      if (!this._document) return this;
+      if (!this._document) return;
 
       const data = {
         tagInsert: "insert",
@@ -57,11 +57,10 @@ export class Parser {
       }
 
       for (const element of elementsForRemoves) element.remove();
-      return this;
     },
     // https://github.com/mineejo/hipe#container
     insertContainer: () => {
-      if (!this._document) return this;
+      if (!this._document) return;
 
       const data = {
         tagInsert: "insert",
@@ -102,7 +101,6 @@ export class Parser {
       }
 
       for (const element of elementsForRemoves) element.remove();
-      return this;
     },
   };
 

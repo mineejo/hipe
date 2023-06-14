@@ -22,7 +22,7 @@ jobs:
           npm i
           fi
       - name: Run test
-        run: npm test
+        run: npm run test
 
   publish-npm:
     needs: build

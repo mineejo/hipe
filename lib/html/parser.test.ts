@@ -57,3 +57,24 @@ test("insertContainer, items are correctly updated", (t) => {
     true
   );
 });
+
+test("insertRedirect, items are correctly updated", (t) => {
+  const parser = new Parser(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <title>Title</title>
+    <insert redirect="https://example.com/" delay="5"></insert>
+    </head>
+    </html>
+  `);
+
+  const document: Document | undefined = parseHtml(parser.htmlToString());
+
+  const meta = document?.querySelector('meta[http-equiv="refresh"]');
+
+  t.is(
+    meta && meta?.getAttribute("content") === "5; https://example.com/",
+    true
+  );
+});

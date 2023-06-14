@@ -32,18 +32,20 @@ export class Parser {
       const elements = this._document.getElementsByTagName(data.tagInsert);
       for (let i = 0; i < elements.length; i++) {
         const element: Element | undefined = elements[i];
-        const storeName = element?.getAttribute(data.attrStore);
-        const storeValueName = element?.getAttribute(data.attrValue);
+        if (!element) continue;
+        const storeName = element.getAttribute(data.attrStore);
+        const storeValueName = element.getAttribute(data.attrValue);
         if (storeName) {
           const storeQuery = `${data.tagStore}[${data.attrName}=${storeName}]`;
           const store = this._document.querySelector(storeQuery);
 
           if (store) {
             elementsForRemoves.push(store);
-            const storeValues: HTMLCollection = store?.children ?? [];
+            const storeValues: HTMLCollection = store.children ?? [];
             for (let j = 0; j <= storeValues.length - 1; j++) {
               const storeValue: Element | undefined = storeValues[j];
-              const valueName = storeValue?.getAttribute(data.attrName);
+              if (!storeValue) continue;
+              const valueName = storeValue.getAttribute(data.attrName);
               if (valueName === storeValueName && storeValue) {
                 elementsForUpdates.push([element, storeValue.innerHTML]);
               }
@@ -77,7 +79,8 @@ export class Parser {
       const elements = this._document.getElementsByTagName(data.tagInsert);
       for (let i = 0; i < elements.length; i++) {
         const element: Element | undefined = elements[i];
-        const containerName = element?.getAttribute(data.attrContainer);
+        if (!element) continue;
+        const containerName = element.getAttribute(data.attrContainer);
         if (containerName) {
           const container = this._document.querySelector(
             `${data.tagContainer}[${data.attrName}=${containerName}]`
@@ -94,7 +97,7 @@ export class Parser {
         if (element && storeValue) {
           const children: NodeListOf<ChildNode> = storeValue.childNodes;
           children.forEach(function (item: ChildNode): void {
-            element?.replaceWith(element, item.cloneNode(true));
+            element.replaceWith(element, item.cloneNode(true));
           });
           elementsForRemoves.push(element);
         }

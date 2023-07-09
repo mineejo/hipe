@@ -8,15 +8,17 @@ function parseHtml(str: string): Document | undefined {
 
 test("insertStore, items are correctly updated", (t) => {
   const parser = new Parser(`
-    <div>
-      <store name="config">
-        <value name="author">MineEjo</value>
-        <value name="version">1.0.0</value>
-      </store>
-      <div id="content">
-        <insert store="config" value="author"></insert><insert store="config" value="version"></insert>
+    <body>
+      <div>
+        <store name="config">
+          <value name="author">MineEjo</value>
+          <value name="version">1.0.0</value>
+        </store>
+        <div id="content">
+          <insert store="config" value="author"></insert><insert store="config" value="version"></insert>
+        </div>
       </div>
-    </div>
+    </body>
   `);
 
   const document: Document | undefined = parseHtml(parser.htmlToString());
@@ -28,21 +30,23 @@ test("insertStore, items are correctly updated", (t) => {
 
 test("insertContainer, items are correctly updated", (t) => {
   const parser = new Parser(`
-    <container name="list">
-      List
-        <div>
-          Fruits
-          <ul>
-            <li>Mango</li>
-            <li>Orange</li>
-          </ul>
-        </div>
-    </container>
-    <div id="content">
-      <insert container="list"></insert>
-      <div>...</div>
-      <insert container="list"></insert>
-    </div>
+    <body>
+      <container name="list">
+        List
+          <div>
+            Fruits
+            <ul>
+              <li>Mango</li>
+              <li>Orange</li>
+            </ul>
+          </div>
+      </container>
+      <div id="content">
+        <insert container="list"></insert>
+        <div>...</div>
+        <insert container="list"></insert>
+      </div>
+    </body>
   `);
 
   const document: Document | undefined = parseHtml(parser.htmlToString());
@@ -50,7 +54,6 @@ test("insertContainer, items are correctly updated", (t) => {
   const div = document?.getElementById("content");
   const firstList = div?.children[0];
   const secondList = div?.children[2];
-
   t.is(
     firstList?.innerHTML.startsWith("List") ===
       secondList?.innerHTML.startsWith("List"),

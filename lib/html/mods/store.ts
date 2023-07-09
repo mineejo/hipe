@@ -27,6 +27,7 @@ export class Store extends Mod {
     attr: "name",
   } as const;
 
+  // If the Hipe tag is not in the HTML specification, add it to this array.
   public static readonly tags: string[] = [
     Store.insert.tag,
     Store.value.tag,

@@ -12,6 +12,7 @@ export class Redirect extends Mod {
     optionalAttr: "delay",
   } as const;
 
+  // If the Hipe tag is not in the HTML specification, add it to this array.
   public static readonly tags: string[] = [Redirect.insert.tag];
 
   public constructor(document: Document) {

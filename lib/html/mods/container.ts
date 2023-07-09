@@ -19,6 +19,7 @@ export class Container extends Mod {
     attr: "name",
   } as const;
 
+  // If the Hipe tag is not in the HTML specification, add it to this array.
   public static readonly tags: string[] = [
     Container.insert.tag,
     Container.container.tag,

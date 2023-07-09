@@ -42,6 +42,11 @@ Examples:
                                           `dist` and leaves comments
 ```
 
+> Hint, next you will see common and functional types.
+> A common type is in HTML, but does not itself interact
+> with it, while a functional type, on the contrary, implements
+> or inserts elements into a common type.
+
 ### Store
 
 Store for data that changes frequently but is a constant.

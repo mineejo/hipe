@@ -11,7 +11,7 @@ export class Parser {
     [name: string]: () => void;
   } = {
     // https://github.com/mineejo/hipe#redirect
-    insertRedirect: () => {
+    redirect: () => {
       if (!this._document) return;
 
       const data = {
@@ -41,7 +41,7 @@ export class Parser {
       for (const element of elementsForRemoves) element.remove();
     },
     // https://github.com/mineejo/hipe#store
-    insertStore: () => {
+    store: () => {
       if (!this._document) return;
 
       const data = {
@@ -89,7 +89,7 @@ export class Parser {
       for (const element of elementsForRemoves) element.remove();
     },
     // https://github.com/mineejo/hipe#container
-    insertContainer: () => {
+    container: () => {
       if (!this._document) return;
 
       const data = {

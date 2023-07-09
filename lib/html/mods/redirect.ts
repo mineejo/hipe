@@ -1,16 +1,30 @@
 import { Mod } from "../mod.js";
 
-/// Redirect is a simplified HTML redirect entry that is more visible and readable.
-/// Read more on [GitHub...](https://github.com/mineejo/hipe#redirect)
+/**
+ * Redirect is a simplified HTML redirect entry that is more visible and readable.
+ * Read more on [GitHub...](https://github.com/mineejo/hipe#redirect)
+ */
 export class Redirect extends Mod {
-  // Hipe Element Description.
-  // For this implementation, "insert" is the functional
-  // tag that will implement or insert the rest of the html.
+  /**
+   * Hipe Element Description.
+   * For this implementation, "insert" is the functional
+   * tag that will implement or insert the rest of the html.
+   */
   public static readonly insert = {
     tag: "insert",
     attr: "redirect",
     optionalAttr: "delay",
   } as const;
+
+  /**
+   * HTML Element Description.
+   */
+  public static readonly meta = {
+    tag: "meta",
+    attr: "http-equiv",
+    attrValue: "refresh",
+    secondAttr: "content",
+  };
 
   // If the Hipe tag is not in the HTML specification, add it to this array.
   public static readonly tags: string[] = [Redirect.insert.tag];

@@ -1,27 +1,35 @@
 import { Mod } from "../mod.js";
 
-/// Store for data that changes frequently but is a constant.
-/// For example, the config store can be listed above all other elements
-/// in `<body>`, so you don't have to search for it amongst the many
-/// elements and be aware of the information used.
-/// Read more on [GitHub...](https://github.com/mineejo/hipe#store)
+/**
+ * Store for data that changes frequently but is a constant.
+ * For example, the config store can be listed above all other elements
+ * in `<body>`, so you don't have to search for it amongst the many
+ * elements and be aware of the information used.
+ * Read more on [GitHub...](https://github.com/mineejo/hipe#store)
+ */
 export class Store extends Mod {
-  // Hipe Element Description.
-  // For this implementation, "insert" is the functional
-  // tag that will implement or insert the rest of the html.
+  /**
+   * Hipe Element Description.
+   * For this implementation, "insert" is the functional
+   * tag that will implement or insert the rest of the html.
+   */
   public static readonly insert = {
     tag: "insert",
     attr: "value",
     secondAttr: "store",
   } as const;
 
-  // Hipe Element Description.
+  /**
+   * Hipe Element Description.
+   */
   public static readonly value = {
     tag: "value",
     attr: "name",
   } as const;
 
-  // Hipe Element Description.
+  /**
+   * Hipe Element Description.
+   */
   public static readonly store = {
     tag: "store",
     attr: "name",

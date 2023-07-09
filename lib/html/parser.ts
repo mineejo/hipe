@@ -5,7 +5,9 @@ import { Container } from "./mods/container.js";
 import { Mod } from "./mod.js";
 
 export type HipeElement = HTMLElement;
+// HTML tag to replace the Hipe tag before parsing.
 export const hipeTag = "noscript" as const;
+// HTML attribute that must contain the name of the Hipe tag.
 export const hipeTagAttr = "data-hipe-tag" as const;
 
 /**
@@ -35,7 +37,7 @@ export class Parser {
   }
 
   private addMods(mods: (typeof Mod)[]): void {
-    // Before adding mods, resets "meta" tag names to an attribute
+    // Before adding mods, resets "noscript" tag names to an attribute
     // with a tag to work more adequately with the JSDOM parser.
     for (const mod of mods) {
       const tags: string[] = mod?.["tags"];

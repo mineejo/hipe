@@ -4,6 +4,10 @@ import { Store } from "./mods/store.js";
 import { Container } from "./mods/container.js";
 import { Mod } from "./mod.js";
 
+export type HipeElement = HTMLElement;
+export const hipeTag = "noscript" as const;
+export const hipeTagAttr = "data-hipe-tag" as const;
+
 /**
  * Parser uses a web-like DOM implementation to parses
  * HTML and implements Hipe elements, etc., modifying existing elements.
@@ -39,10 +43,9 @@ export class Parser {
 
       for (const tag of tags) {
         if (!tag) continue;
-        this._content = this._content.replaceAll(
-          `<${tag}`,
-          `<meta data-hipe-tag="${tag}" `
-        );
+        this._content = this._content
+          .replaceAll(`<${tag}`, `<${hipeTag} ${hipeTagAttr}="${tag}" `)
+          .replaceAll(`</${tag}>`, `</${hipeTag}>`);
       }
     }
 

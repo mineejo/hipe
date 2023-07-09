@@ -1,4 +1,5 @@
 import { Mod } from "../mod.js";
+import { HipeElement } from "../parser.js";
 
 /**
  * The container is similar to a store, but contains HTML elements
@@ -34,39 +35,38 @@ export class Container extends Mod {
   public constructor(document: Document) {
     super(document);
 
-    const elementsForRemoves: Element[] = [];
-    const elementsForUpdates: [[Element | undefined, Element | undefined]] = [
-      [undefined, undefined],
-    ];
+    const elementsForRemoves: HipeElement[] = [];
+    const elementsForUpdates: HipeElement[][] = [];
+    const elements: HipeElement[] = this.getHipeElements(Container.insert.tag);
+    if (!elements) return;
 
-    const elements = this.document.getElementsByTagName(Container.insert.tag);
-    for (let i = 0; i < elements.length; i++) {
-      const element: Element | undefined = elements[i];
-      if (!element) continue;
+    for (const e of elements) {
+      const name: string | null = e.getAttribute(Container.insert.attr);
+      if (!name) continue;
 
-      const containerName = element.getAttribute(Container.insert.attr);
-      if (containerName) {
-        const container = this.document.querySelector(
-          `${Container.container.tag}[${Container.container.attr}=${containerName}]`
-        );
+      const container: HipeElement | undefined = this.getHipeElements(
+        Container.container.tag
+      ).filter((e: HipeElement): boolean => {
+        return e.getAttribute(Container.container.attr) === name;
+      })[0];
 
-        if (container) {
-          elementsForRemoves.push(container);
-          elementsForUpdates.push([element, container]);
-        }
-      }
+      if (!container) continue;
+      elementsForRemoves.push(container);
+      elementsForUpdates.push([e, container]);
     }
 
     for (const [element, storeValue] of elementsForUpdates) {
-      if (element && storeValue) {
-        const children: NodeListOf<ChildNode> = storeValue.childNodes;
-        children.forEach(function (item: ChildNode): void {
-          element.replaceWith(element, item.cloneNode(true));
-        });
-        elementsForRemoves.push(element);
-      }
+      if (!element || !storeValue) continue;
+
+      const nodes: ChildNode[] = Array.from(storeValue.childNodes).reverse();
+
+      nodes.forEach(function (child: ChildNode): void {
+        element.replaceWith(element, child.cloneNode(true));
+      });
+
+      elementsForRemoves.push(element);
     }
 
-    for (const element of elementsForRemoves) element.remove();
+    for (const e of elementsForRemoves) e.remove();
   }
 }

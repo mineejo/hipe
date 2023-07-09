@@ -1,4 +1,5 @@
 import { Mod } from "../mod.js";
+import { HipeElement } from "../parser.js";
 
 /**
  * Redirect is a simplified HTML redirect entry that is more visible and readable.
@@ -32,28 +33,32 @@ export class Redirect extends Mod {
   public constructor(document: Document) {
     super(document);
 
-    const elementsForRemoves: Element[] = [];
+    const elementsForRemoves: HipeElement[] = [];
+    const elementsForUpdates: HipeElement[][] = [];
+    const elements: HipeElement[] = this.getHipeElements(Redirect.insert.tag);
+    if (!elements) return;
 
-    const elements = this.document.getElementsByTagName(Redirect.insert.tag);
-    for (let i = 0; i < elements.length; i++) {
-      const element: Element | undefined = elements[i];
-      if (!element) continue;
-
+    for (const e of elements) {
       // The delay is measured in seconds.
       const minDelay = "0" as const;
-      const delay =
-        element.getAttribute(Redirect.insert.optionalAttr) ?? minDelay;
+      const delay = e.getAttribute(Redirect.insert.optionalAttr) ?? minDelay;
 
-      const url: string | null = element.getAttribute(Redirect.insert.attr);
-      if (url) {
-        const meta = this.document.createElement("meta");
-        meta.setAttribute("http-equiv", "refresh");
-        meta.setAttribute("content", `${delay}; ${url}`);
-        this.document.getElementsByTagName("head")[0]?.appendChild(meta);
-        elementsForRemoves.push(element);
-      }
+      const url: string | null = e.getAttribute(Redirect.insert.attr);
+      if (!url) continue;
+
+      const meta = this.document.createElement(Redirect.meta.tag);
+      meta.setAttribute(Redirect.meta.attr, Redirect.meta.attrValue);
+      meta.setAttribute(Redirect.meta.secondAttr, `${delay}; ${url}`);
+
+      elementsForRemoves.push(e);
+      elementsForUpdates.push([e, meta]);
     }
 
-    for (const element of elementsForRemoves) element.remove();
+    for (const [element, newElement] of elementsForUpdates) {
+      if (!element || !newElement) continue;
+      element.replaceWith(element, newElement);
+    }
+
+    for (const e of elementsForRemoves) e.remove();
   }
 }

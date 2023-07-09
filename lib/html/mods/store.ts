@@ -1,4 +1,5 @@
 import { Mod } from "../mod.js";
+import { HipeElement, hipeTagAttr } from "../parser.js";
 
 /**
  * Store for data that changes frequently but is a constant.
@@ -45,41 +46,44 @@ export class Store extends Mod {
   public constructor(document: Document) {
     super(document);
 
-    const elementsForRemoves: Element[] = [];
-    const elementsForUpdates: [[Element | undefined, string | undefined]] = [
-      [undefined, undefined],
-    ];
+    const elementsForRemoves: HipeElement[] = [];
+    const elementsForUpdates: (HipeElement | string)[][] = [];
+    const elements: HipeElement[] = this.getHipeElements(Store.insert.tag);
+    if (!elements) return;
 
-    const elements = this.document.getElementsByTagName(Store.insert.tag);
-    for (let i = 0; i < elements.length; i++) {
-      const element: Element | undefined = elements[i];
-      if (!element) continue;
+    for (const e of elements) {
+      const insertValueName: string | null = e.getAttribute(Store.insert.attr);
+      const insertStoreName: string | null = e.getAttribute(
+        Store.insert.secondAttr
+      );
+      if (!insertStoreName) return;
 
-      const storeValueName = element.getAttribute(Store.insert.attr);
-      const storeName = element.getAttribute(Store.insert.secondAttr);
-      if (storeName) {
-        const storeQuery = `${Store.store.tag}[${Store.store.attr}=${storeName}]`;
-        const store = this.document.querySelector(storeQuery);
-        if (store) {
-          elementsForRemoves.push(store);
+      const store: HipeElement | undefined = this.getHipeElements(
+        Store.store.tag
+      ).filter((e: HipeElement): boolean => {
+        return e.getAttribute(Store.store.attr) === insertStoreName;
+      })[0];
 
-          const storeValues: HTMLCollection = store.children ?? [];
-          for (let j = 0; j <= storeValues.length - 1; j++) {
-            const storeValue: Element | undefined = storeValues[j];
-            const tagName = storeValue?.tagName.toLowerCase();
-            if (!storeValue || tagName !== Store.value.tag) continue;
+      if (!store) return;
+      elementsForRemoves.push(store);
+      const storeValues: HTMLCollection = store.children ?? [];
 
-            const valueName = storeValue.getAttribute(Store.value.attr);
-            if (valueName === storeValueName && storeValue) {
-              elementsForUpdates.push([element, storeValue.innerHTML]);
-            }
-          }
+      for (let j = 0; j <= storeValues.length - 1; j++) {
+        const value: Element | undefined = storeValues[j];
+        const tagName: string = value?.getAttribute(hipeTagAttr) ?? "";
+        if (!value || tagName !== Store.value.tag) continue;
+
+        const valueName = value.getAttribute(Store.value.attr);
+        if (valueName === insertValueName && value) {
+          elementsForUpdates.push([e, value.innerHTML]);
         }
       }
     }
 
     for (const [element, storeValue] of elementsForUpdates) {
-      if (element && storeValue) element.replaceWith(storeValue);
+      if (element && storeValue && typeof element !== "string") {
+        element.replaceWith(storeValue);
+      }
     }
 
     for (const element of elementsForRemoves) element.remove();

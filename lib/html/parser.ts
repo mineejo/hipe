@@ -1,5 +1,7 @@
 import { JSDOM } from "jsdom";
-import { wrap } from "multitry";
+import { Redirect } from "./mods/redirect.js";
+import { Store } from "./mods/store.js";
+import { Container } from "./mods/container.js";
 
 /**
  * Parser uses a web-like DOM implementation to parses
@@ -7,146 +9,17 @@ import { wrap } from "multitry";
  */
 export class Parser {
   private readonly _document: Document | undefined;
-  private mods: {
-    [name: string]: () => void;
-  } = {
-    // https://github.com/mineejo/hipe#redirect
-    redirect: () => {
-      if (!this._document) return;
-
-      const data = {
-        tagInsert: "insert",
-        attrRedirect: "redirect",
-        attrDelay: "delay",
-      } as const;
-
-      const elementsForRemoves: Element[] = [];
-
-      const elements = this._document.getElementsByTagName(data.tagInsert);
-      for (let i = 0; i < elements.length; i++) {
-        const element: Element | undefined = elements[i];
-        if (!element) continue;
-        const redirect = element.getAttribute(data.attrRedirect);
-        const minDelay = "0" as const;
-        const redirectDelay = element.getAttribute(data.attrDelay) ?? minDelay;
-        if (redirect) {
-          const meta = this._document.createElement("meta");
-          meta.setAttribute("http-equiv", "refresh");
-          meta.setAttribute("content", `${redirectDelay}; ${redirect}`);
-          this._document.getElementsByTagName("head")[0]?.appendChild(meta);
-          elementsForRemoves.push(element);
-        }
-      }
-
-      for (const element of elementsForRemoves) element.remove();
-    },
-    // https://github.com/mineejo/hipe#store
-    store: () => {
-      if (!this._document) return;
-
-      const data = {
-        tagInsert: "insert",
-        tagStore: "store",
-        attrStore: "store",
-        attrValue: "value",
-        attrName: "name",
-      } as const;
-
-      const elementsForRemoves: Element[] = [];
-      const elementsForUpdates: [[Element | undefined, string | undefined]] = [
-        [undefined, undefined],
-      ];
-
-      const elements = this._document.getElementsByTagName(data.tagInsert);
-      for (let i = 0; i < elements.length; i++) {
-        const element: Element | undefined = elements[i];
-        if (!element) continue;
-        const storeName = element.getAttribute(data.attrStore);
-        const storeValueName = element.getAttribute(data.attrValue);
-        if (storeName) {
-          const storeQuery = `${data.tagStore}[${data.attrName}=${storeName}]`;
-          const store = this._document.querySelector(storeQuery);
-
-          if (store) {
-            elementsForRemoves.push(store);
-            const storeValues: HTMLCollection = store.children ?? [];
-            for (let j = 0; j <= storeValues.length - 1; j++) {
-              const storeValue: Element | undefined = storeValues[j];
-              if (!storeValue) continue;
-              const valueName = storeValue.getAttribute(data.attrName);
-              if (valueName === storeValueName && storeValue) {
-                elementsForUpdates.push([element, storeValue.innerHTML]);
-              }
-            }
-          }
-        }
-      }
-
-      for (const [element, storeValue] of elementsForUpdates) {
-        if (element && storeValue) element.replaceWith(storeValue);
-      }
-
-      for (const element of elementsForRemoves) element.remove();
-    },
-    // https://github.com/mineejo/hipe#container
-    container: () => {
-      if (!this._document) return;
-
-      const data = {
-        tagInsert: "insert",
-        tagContainer: "container",
-        attrContainer: "container",
-        attrName: "name",
-      } as const;
-
-      const elementsForRemoves: Element[] = [];
-      const elementsForUpdates: [[Element | undefined, Element | undefined]] = [
-        [undefined, undefined],
-      ];
-
-      const elements = this._document.getElementsByTagName(data.tagInsert);
-      for (let i = 0; i < elements.length; i++) {
-        const element: Element | undefined = elements[i];
-        if (!element) continue;
-        const containerName = element.getAttribute(data.attrContainer);
-        if (containerName) {
-          const container = this._document.querySelector(
-            `${data.tagContainer}[${data.attrName}=${containerName}]`
-          );
-
-          if (container) {
-            elementsForRemoves.push(container);
-            elementsForUpdates.push([element, container]);
-          }
-        }
-      }
-
-      for (const [element, storeValue] of elementsForUpdates) {
-        if (element && storeValue) {
-          const children: NodeListOf<ChildNode> = storeValue.childNodes;
-          children.forEach(function (item: ChildNode): void {
-            element.replaceWith(element, item.cloneNode(true));
-          });
-          elementsForRemoves.push(element);
-        }
-      }
-
-      for (const element of elementsForRemoves) element.remove();
-    },
-  };
 
   /**
    * @param {string} str - HTML file, HTML strings, etc.
    */
   public constructor(str: string) {
     this._document = new JSDOM(str).window._document;
-
-    Object.keys(this.mods).forEach((modName: string): void => {
-      wrap({
-        try: () => this.mods[modName]?.(),
-        catch: (e: Error) => console.error(e),
-      });
-    });
+    if (this._document) {
+      this._document = new Redirect(this._document).document;
+      this._document = new Container(this._document).document;
+      this._document = new Store(this._document).document;
+    }
   }
 
   /**

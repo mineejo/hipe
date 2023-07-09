@@ -1,41 +1,46 @@
+import { Mod } from "../mod.js";
+
 /// The container is similar to a store, but contains HTML elements
 /// instead of values. It is useful when you can avoid duplicate
 /// elements or nested constructions.
 /// Read more on [GitHub...](https://github.com/mineejo/hipe#container)
-export class Container {
+export class Container extends Mod {
   // Hipe Element Description.
   // For this implementation, "insert" is the functional
   // tag that will implement or insert the rest of the html.
-  readonly insert = {
+  public static readonly insert = {
     tag: "insert",
     attr: "container",
   } as const;
 
   // Hipe Element Description.
-  readonly container = {
+  public static readonly container = {
     tag: "container",
     attr: "name",
   } as const;
 
-  private readonly _document: Document;
+  public static readonly tags: string[] = [
+    Container.insert.tag,
+    Container.container.tag,
+  ];
 
-  constructor(document: Document) {
-    this._document = document;
+  public constructor(document: Document) {
+    super(document);
 
     const elementsForRemoves: Element[] = [];
     const elementsForUpdates: [[Element | undefined, Element | undefined]] = [
       [undefined, undefined],
     ];
 
-    const elements = this._document.getElementsByTagName(this.insert.tag);
+    const elements = this.document.getElementsByTagName(Container.insert.tag);
     for (let i = 0; i < elements.length; i++) {
       const element: Element | undefined = elements[i];
       if (!element) continue;
 
-      const containerName = element.getAttribute(this.insert.attr);
+      const containerName = element.getAttribute(Container.insert.attr);
       if (containerName) {
-        const container = this._document.querySelector(
-          `${this.container.tag}[${this.container.attr}=${containerName}]`
+        const container = this.document.querySelector(
+          `${Container.container.tag}[${Container.container.attr}=${containerName}]`
         );
 
         if (container) {
@@ -56,9 +61,5 @@ export class Container {
     }
 
     for (const element of elementsForRemoves) element.remove();
-  }
-
-  get document(): Document {
-    return this._document;
   }
 }

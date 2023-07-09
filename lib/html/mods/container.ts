@@ -1,4 +1,7 @@
-// https://github.com/mineejo/hipe#container
+/// The container is similar to a store, but contains HTML elements
+/// instead of values. It is useful when you can avoid duplicate
+/// elements or nested constructions.
+/// Read more on [GitHub...](https://github.com/mineejo/hipe#container)
 export class Container {
   // Hipe Element Description.
   // For this implementation, "insert" is the functional

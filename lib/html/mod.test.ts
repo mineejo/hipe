@@ -16,7 +16,7 @@ class ModTest extends Mod {
   public constructor(document: Document) {
     super(document);
     if (!document) return;
-    this.content = this.getHipeElements(tagName)[0]?.innerHTML ?? "";
+    this.content = this.getHipeElementsByTag(tagName)[0]?.innerHTML ?? "";
   }
 }
 

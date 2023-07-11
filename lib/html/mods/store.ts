@@ -48,7 +48,7 @@ export class Store extends Mod {
 
     const elementsForRemoves: HipeElement[] = [];
     const elementsForUpdates: (HipeElement | string)[][] = [];
-    const elements: HipeElement[] = this.getHipeElements(Store.insert.tag);
+    const elements: HipeElement[] = this.getHipeElementsByTag(Store.insert.tag);
     if (!elements) return;
 
     for (const e of elements) {

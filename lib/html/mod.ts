@@ -16,10 +16,12 @@ export class Mod {
    * like getElementBy... because of the specific work of the parser,
    * which changes the element at work.
    *
-   * @param tag - Hipe tag from an HTML file.
+   * @param {string} tag - Hipe tag from an HTML file.
+   *
+   * @returns {Array<HipeElement>}
    * @protected
    */
-  protected getHipeElements(tag: string): HipeElement[] {
+  protected getHipeElementsByTag(tag: string): HipeElement[] {
     const elements: HipeElement[] = [];
     this.document.querySelectorAll(hipeTag).forEach((e) => {
       if (e.getAttribute(hipeTagAttr) && e.getAttribute(hipeTagAttr) === tag) {

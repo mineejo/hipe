@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/mineejo/hipe/compare/v2.0.0...v3.0.0) (2023-07-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* use Prettier API for HTML formatting
+* add unwrapping to preserve the original html look
+* add a document wrapper to fix the conversion of multiple HTML strings
+* position ignoring by redirect mod
+* refactor and write a reset of custom tags to normal HTML tags
+
+### Features
+
+* add a document wrapper to fix the conversion of multiple HTML strings ([7227908](https://github.com/mineejo/hipe/commits/72279082440a42716072ac2633d32a9ed7228e16))
+* add a hint to the method of adding modifications ([3d71ecf](https://github.com/mineejo/hipe/commits/3d71ecf9cb6cdae3c45b5957b6a1ebd3a3f88eca))
+* add a method to get element Hipe by attribute value ([85e209c](https://github.com/mineejo/hipe/commits/85e209c92aeecc3ae0ff7d55f77f479dc4fa9682))
+* add and correct comments ([d12d0dc](https://github.com/mineejo/hipe/commits/d12d0dc0bb7ce09c3a1601babd7f54df8f9614b7))
+* add and update comments ([243003d](https://github.com/mineejo/hipe/commits/243003d7975a356e39608b0ef24c504c1888710a))
+* add clarity to the name of the method for getting an item ([104f008](https://github.com/mineejo/hipe/commits/104f0080819d66f433c1ad5ea82327fe44756793))
+* add type hint to Readme.md ([a4ada25](https://github.com/mineejo/hipe/commits/a4ada25e68d58957bd325941f85a45cf05f9b747))
+* add unwrapping to preserve the original html look ([f7539fc](https://github.com/mineejo/hipe/commits/f7539fca59507333dceb791a8294f69a38a7ebbb))
+* give the mods their proper names ([0137bc5](https://github.com/mineejo/hipe/commits/0137bc5c696b1e419a4b804663fd2b1d37d4af50))
+* refactor and write a reset of custom tags to normal HTML tags ([bcd5f97](https://github.com/mineejo/hipe/commits/bcd5f972c69c1880e84777ddd1efd9b184373c3a))
+* replace "meta" tag with "noscript" to return content to the element ([94acb86](https://github.com/mineejo/hipe/commits/94acb8638c8db28611c9a2681b7668fa38882776))
+* rewrite the modifier functions and refactor a bit ([1193c88](https://github.com/mineejo/hipe/commits/1193c88e64f8b958417a145bc69b66c32060fb31))
+* the document wrapper has been split into two classes ([04d3fa9](https://github.com/mineejo/hipe/commits/04d3fa998861989f5505e27de09bcdcacfbaa11a))
+* update and add modification tests ([449d445](https://github.com/mineejo/hipe/commits/449d44507a4841855510542b8e8e9b87b0c827b4))
+* update modifications for the new parsing ([4d49b9c](https://github.com/mineejo/hipe/commits/4d49b9cb3d18048de38322c0eecf011ccb44c109))
+* use Prettier API for HTML formatting ([a0dfb2c](https://github.com/mineejo/hipe/commits/a0dfb2cc295868198d2fef271d134d98cdd8cae7))
+
+
+### Bug Fixes
+
+* a promise for Prettier. ([7072b1e](https://github.com/mineejo/hipe/commits/7072b1ed400ca6b0dde7849e36f7b301194a464a))
+* appearance of the tooltip, so the plain text is more noticeable ([478087e](https://github.com/mineejo/hipe/commits/478087e2aef08e01f6c64a985304baee4fc64f33))
+* command to run tests in workflow ([42e5306](https://github.com/mineejo/hipe/commits/42e53069848304293e31c8da3a3a730689bdbcab))
+* description of the modification class of the Container ([817ec52](https://github.com/mineejo/hipe/commits/817ec5293cce2b97c8ebeafe1984773c0964748a))
+* empty npm tab ([4db66a4](https://github.com/mineejo/hipe/commits/4db66a484f6007b7b9fbc204facb2cf33a101101))
+* position ignoring by redirect mod ([f18a8c8](https://github.com/mineejo/hipe/commits/f18a8c8b81fc201cdfdcdd8c4ebd6174f6986921))
+* the method name is htmlToString, but convert document ([1c1d1a7](https://github.com/mineejo/hipe/commits/1c1d1a78e281ad34fd41979fb5e711d7ee2bf7d9))
+* unnecessary body tag in tests ([8290d0d](https://github.com/mineejo/hipe/commits/8290d0d0ab5ff70409cd451322b972ae830bfd3c))
+
 ## [2.0.0](https://github.com/mineejo/hipe/compare/v1.2.0...v2.0.0) (2023-06-14)
 
 

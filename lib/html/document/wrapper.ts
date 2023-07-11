@@ -13,7 +13,7 @@ export class Wrapper extends Document {
 
   private _doctype = "<!DOCTYPE html>";
 
-  get doctype(): string {
+  public get doctype(): string {
     return this._doctype;
   }
 

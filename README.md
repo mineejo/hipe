@@ -230,7 +230,7 @@ A redirect is a simplified HTML redirect entry that is more visible and readable
 To use the Hipe parser, use the `Parser` class.
 
 ```javascript
-const newStr = new Parser(str).htmlToString();
+const newStr = new Parser(str).documentToString();
 ```
 
 [Read more about API...][DOCS_URL]

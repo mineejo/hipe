@@ -27,7 +27,7 @@ test("mod, Hipe element received", (t) => {
     </body>
   `);
 
-  const document: Document | undefined = parseHtml(parser.htmlToString());
+  const document: Document | undefined = parseHtml(parser.documentToString());
   const modTest = document ? new ModTest(document) : "";
 
   if (modTest instanceof ModTest) {

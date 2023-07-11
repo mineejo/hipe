@@ -67,7 +67,7 @@ yargs(hideBin(process.argv))
           content = content.replace(commentRegExp, "");
         }
 
-        const newContent: string = new Parser(content).htmlToString();
+        const newContent: string = new Parser(content).documentToString();
         if (newContent == content) continue;
 
         if (output) {

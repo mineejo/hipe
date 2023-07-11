@@ -21,7 +21,7 @@ test("insertStore, items are correctly updated", (t) => {
     </body>
   `);
 
-  const document: Document | undefined = parseHtml(parser.htmlToString());
+  const document: Document | undefined = parseHtml(parser.documentToString());
 
   const div = document?.getElementById("content");
   const content = "MineEjo1.0.0" as const;
@@ -49,7 +49,7 @@ test("insertContainer, items are correctly updated", (t) => {
     </body>
   `);
 
-  const document: Document | undefined = parseHtml(parser.htmlToString());
+  const document: Document | undefined = parseHtml(parser.documentToString());
 
   const div = document?.getElementById("content");
   const firstList = div?.children[0];
@@ -72,7 +72,7 @@ test("insertRedirect, items are correctly updated", (t) => {
     </html>
   `);
 
-  const document: Document | undefined = parseHtml(parser.htmlToString());
+  const document: Document | undefined = parseHtml(parser.documentToString());
 
   const meta = document?.querySelector('meta[http-equiv="refresh"]');
 

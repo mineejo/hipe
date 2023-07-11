@@ -38,7 +38,7 @@ export class Parser {
   /**
    * @returns {string} The finished HTML document as a string.
    */
-  public htmlToString(): string {
+  public documentToString(): string {
     if (!this._document) return "";
 
     let str = this._document.documentElement.outerHTML.toString();

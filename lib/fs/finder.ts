@@ -43,7 +43,7 @@ export class Finder {
     return this._foundFiles;
   }
 
-  private finder(startPath) {
+  private finder(startPath): void {
     if (!existsSync(startPath)) {
       /* The format of the message follows the CPO format.
        * https://github.com/mineejo/cpo

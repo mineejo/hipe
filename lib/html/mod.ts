@@ -5,9 +5,9 @@ import { HipeElement, hipeTag, hipeTagAttr } from "./parser.js";
  * and fields for other modifications.
  */
 export class Mod {
-  readonly document: Document;
+  public readonly document: Document;
 
-  constructor(document: Document) {
+  public constructor(document: Document) {
     this.document = document;
   }
 

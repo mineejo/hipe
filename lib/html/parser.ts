@@ -3,7 +3,8 @@ import { Redirect } from "./mods/redirect.js";
 import { Store } from "./mods/store.js";
 import { Container } from "./mods/container.js";
 import { Mod } from "./mod.js";
-import { DocumentIntegrity, DocumentWrapper } from "./document-wrapper.js";
+import { Wrapper } from "./document/wrapper.js";
+import { DocumentIntegrity } from "./document.js";
 
 export type HipeElement = HTMLElement;
 // HTML tag to replace the Hipe tag before parsing.
@@ -27,7 +28,7 @@ export class Parser {
   public constructor(content: string) {
     this._content = content;
 
-    const documentWrapper = new DocumentWrapper(this._content);
+    const documentWrapper = new Wrapper(this._content);
     this._content = documentWrapper.content;
     this._doctype = documentWrapper.doctype;
     this._documentIntegrity = documentWrapper.documentIntegrity;

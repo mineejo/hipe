@@ -5,6 +5,7 @@ import { Container } from "./mods/container.js";
 import { Mod } from "./mod.js";
 import { Wrapper } from "./document/wrapper.js";
 import { DocumentIntegrity } from "./document.js";
+import { Unwrapper } from "./document/unwrapper.js";
 
 export type HipeElement = HTMLElement;
 // HTML tag to replace the Hipe tag before parsing.
@@ -44,7 +45,7 @@ export class Parser {
 
     let str = this._document.documentElement.outerHTML.toString();
     if (this._documentIntegrity.doctypeTag) str = this._doctype + str;
-    return str;
+    return new Unwrapper(str, this._documentIntegrity).content;
   }
 
   /**

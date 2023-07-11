@@ -11,6 +11,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { Parser } from "../lib/index.js";
 import { Dyer } from "../lib/terminal/dyer.js";
 import { join } from "path";
+import * as prettier from "prettier";
 
 function getCommentParam(argv: string[]): boolean {
   return argv.includes("-C") || argv.includes("--comment");
@@ -67,8 +68,11 @@ yargs(hideBin(process.argv))
           content = content.replace(commentRegExp, "");
         }
 
-        const newContent: string = new Parser(content).documentToString();
+        let newContent: string = new Parser(content).documentToString();
         if (newContent == content) continue;
+        newContent = prettier.format(newContent, {
+          parser: "html",
+        });
 
         if (output) {
           const path = join(output, getFileFromPath(removeHipeExtension(file)));

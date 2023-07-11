@@ -8,17 +8,15 @@ function parseHtml(str: string): Document | undefined {
 
 test("insertStore, items are correctly updated", (t) => {
   const parser = new Parser(`
-    <body>
-      <div>
-        <store name="config">
-          <value name="author">MineEjo</value>
-          <value name="version">1.0.0</value>
-        </store>
-        <div id="content">
-          <insert store="config" value="author"></insert><insert store="config" value="version"></insert>
-        </div>
+    <div>
+      <store name="config">
+        <value name="author">MineEjo</value>
+        <value name="version">1.0.0</value>
+      </store>
+      <div id="content">
+        <insert store="config" value="author"></insert><insert store="config" value="version"></insert>
       </div>
-    </body>
+    </div>
   `);
 
   const document: Document | undefined = parseHtml(parser.documentToString());
@@ -30,23 +28,21 @@ test("insertStore, items are correctly updated", (t) => {
 
 test("insertContainer, items are correctly updated", (t) => {
   const parser = new Parser(`
-    <body>
-      <container name="list">
-        List
-          <div>
-            Fruits
-            <ul>
-              <li>Mango</li>
-              <li>Orange</li>
-            </ul>
-          </div>
-      </container>
-      <div id="content">
-        <insert container="list"></insert>
-        <div>...</div>
-        <insert container="list"></insert>
-      </div>
-    </body>
+    <container name="list">
+      List
+        <div>
+          Fruits
+          <ul>
+            <li>Mango</li>
+            <li>Orange</li>
+          </ul>
+        </div>
+    </container>
+    <div id="content">
+      <insert container="list"></insert>
+      <div>...</div>
+      <insert container="list"></insert>
+    </div>
   `);
 
   const document: Document | undefined = parseHtml(parser.documentToString());

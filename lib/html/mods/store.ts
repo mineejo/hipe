@@ -58,11 +58,11 @@ export class Store extends Mod {
       );
       if (!insertStoreName) return;
 
-      const store: HipeElement | undefined = this.getHipeElements(
-        Store.store.tag
-      ).filter((e: HipeElement): boolean => {
-        return e.getAttribute(Store.store.attr) === insertStoreName;
-      })[0];
+      const store: HipeElement | undefined = this.getHipeElementByTagAttrValue({
+        tag: Store.store.tag,
+        attr: Store.store.attr,
+        value: insertStoreName,
+      });
 
       if (!store) return;
       elementsForRemoves.push(store);

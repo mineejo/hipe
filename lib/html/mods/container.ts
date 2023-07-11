@@ -46,11 +46,12 @@ export class Container extends Mod {
       const name: string | null = e.getAttribute(Container.insert.attr);
       if (!name) continue;
 
-      const container: HipeElement | undefined = this.getHipeElements(
-        Container.container.tag
-      ).filter((e: HipeElement): boolean => {
-        return e.getAttribute(Container.container.attr) === name;
-      })[0];
+      const container: HipeElement | undefined =
+        this.getHipeElementByTagAttrValue({
+          tag: Container.container.tag,
+          attr: Container.container.attr,
+          value: name,
+        });
 
       if (!container) continue;
       elementsForRemoves.push(container);

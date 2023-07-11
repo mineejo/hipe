@@ -3579,9 +3579,9 @@ __metadata:
   linkType: hard
 
 "multitry@npm:^3.1.3":
-  version: 3.1.3
-  resolution: "multitry@npm:3.1.3"
-  checksum: 5909604534933d6cdc511479cb56457520d1dd31027c6e005f558be666056216fa352a5e04551df2cb87aa351eff54ddb913bba14f08b434e228e8afc17458c1
+  version: 3.2.1
+  resolution: "multitry@npm:3.2.1"
+  checksum: b943b680c7385c429411938b00ded3f2d1a669da1dd275873e93f73cc15f242f80cfba16feedac78ac571685fcf80f9baf71b9476cfb345be39b61bcc3fd9550
   languageName: node
   linkType: hard
 

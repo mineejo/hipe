@@ -36,6 +36,13 @@ export class Parser {
     return "<!DOCTYPE html>\n" + html?.replace(blankStrings, "");
   }
 
+  /**
+   * The Hipe parser uses the JSDOM parser,
+   * adding its own modifications implemented on the DOM API.
+   *
+   * @param {Array<Mod>} mods
+   * @private
+   */
   private addMods(mods: (typeof Mod)[]): void {
     // Before adding mods, resets "noscript" tag names to an attribute
     // with a tag to work more adequately with the JSDOM parser.

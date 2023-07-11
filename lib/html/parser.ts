@@ -3,6 +3,7 @@ import { Redirect } from "./mods/redirect.js";
 import { Store } from "./mods/store.js";
 import { Container } from "./mods/container.js";
 import { Mod } from "./mod.js";
+import { DocumentIntegrity, DocumentWrapper } from "./document-wrapper.js";
 
 export type HipeElement = HTMLElement;
 // HTML tag to replace the Hipe tag before parsing.
@@ -17,12 +18,20 @@ export const hipeTagAttr = "data-hipe-tag" as const;
 export class Parser {
   private _content: string;
   private _document: Document | undefined;
+  private readonly _doctype: string;
+  private readonly _documentIntegrity: DocumentIntegrity;
 
   /**
    * @param {string} content - HTML file, HTML strings, etc.
    */
   public constructor(content: string) {
     this._content = content;
+
+    const documentWrapper = new DocumentWrapper(this._content);
+    this._content = documentWrapper.content;
+    this._doctype = documentWrapper.doctype;
+    this._documentIntegrity = documentWrapper.documentIntegrity;
+
     this.addMods([Redirect, Container, Store]);
   }
 
@@ -30,10 +39,11 @@ export class Parser {
    * @returns {string} The finished HTML document as a string.
    */
   public htmlToString(): string {
-    const html: string | undefined =
-      this._document?.documentElement.outerHTML.toString();
-    const blankStrings = /^\s*\n/gm;
-    return "<!DOCTYPE html>\n" + html?.replace(blankStrings, "");
+    if (!this._document) return "";
+
+    let str = this._document.documentElement.outerHTML.toString();
+    if (this._documentIntegrity.doctypeTag) str = this._doctype + str;
+    return str;
   }
 
   /**

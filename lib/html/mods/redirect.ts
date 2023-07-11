@@ -36,7 +36,7 @@ export class Redirect extends Mod {
     const elementsForRemoves: HipeElement[] = [];
     const elementsForUpdates: HipeElement[][] = [];
     const elements: HipeElement[] = this.getHipeElementsByTag(
-      Redirect.insert.tag
+      Redirect.insert.tag,
     );
     if (!elements) return;
 

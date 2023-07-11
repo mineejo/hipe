@@ -42,11 +42,11 @@ export class Document {
   protected contentCutTag(tag: string): string | undefined {
     this._content = this._content.replace(
       new RegExp(`<\\/${tag}[\\s\\S]*?>`),
-      ""
+      "",
     );
 
     const openTag = this._content.match(
-      new RegExp(`<${tag}[\\s\\S]*?>`, "gmi")
+      new RegExp(`<${tag}[\\s\\S]*?>`, "gmi"),
     )?.[0];
     if (!openTag) return;
 

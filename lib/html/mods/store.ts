@@ -54,7 +54,7 @@ export class Store extends Mod {
     for (const e of elements) {
       const insertValueName: string | null = e.getAttribute(Store.insert.attr);
       const insertStoreName: string | null = e.getAttribute(
-        Store.insert.secondAttr
+        Store.insert.secondAttr,
       );
       if (!insertStoreName) return;
 

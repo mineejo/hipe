@@ -38,7 +38,7 @@ export class Container extends Mod {
     const elementsForRemoves: HipeElement[] = [];
     const elementsForUpdates: HipeElement[][] = [];
     const elements: HipeElement[] = this.getHipeElementsByTag(
-      Container.insert.tag
+      Container.insert.tag,
     );
     if (!elements) return;
 

@@ -53,7 +53,7 @@ test("insertContainer, items are correctly updated", (t) => {
   t.is(
     firstList?.innerHTML.startsWith("List") ===
       secondList?.innerHTML.startsWith("List"),
-    true
+    true,
   );
 });
 
@@ -74,6 +74,6 @@ test("insertRedirect, items are correctly updated", (t) => {
 
   t.is(
     meta && meta?.getAttribute("content") === "5; https://example.com/",
-    true
+    true,
   );
 });

@@ -26,8 +26,8 @@ function getOutputParam(argv: string[]): string | undefined {
     console.error(
       `${Dyer.strToRed("×")} OPTION: ${Dyer.str(
         "No path",
-        true
-      )} is specified for the ${Dyer.strToYellow(`--output`)} option`
+        true,
+      )} is specified for the ${Dyer.strToYellow(`--output`)} option`,
     );
     return;
   }
@@ -47,7 +47,7 @@ yargs(hideBin(process.argv))
         type: "string",
       });
     },
-    ({ dir }: ArgumentsCamelCase<{ dir: string }>) => {
+    async ({ dir }: ArgumentsCamelCase<{ dir: string }>) => {
       const files: string[] = new Finder(dir).foundFiles;
       if (!files) return;
 
@@ -70,7 +70,7 @@ yargs(hideBin(process.argv))
 
         let newContent: string = new Parser(content).documentToString();
         if (newContent == content) continue;
-        newContent = prettier.format(newContent, {
+        newContent = await prettier.format(newContent, {
           parser: "html",
         });
 
@@ -89,11 +89,11 @@ yargs(hideBin(process.argv))
        */
       console.log(
         `${Dyer.strToGreen("✓")} HIPE: ${Dyer.strToMagenta(
-          countGenerated.toString()
+          countGenerated.toString(),
         )} HTML files were ${Dyer.str("generated", true)}` +
-          (output ? ` (${output})` : "")
+          (output ? ` (${output})` : ""),
       );
-    }
+    },
   )
   .option("comment", {
     alias: "C",
@@ -110,11 +110,11 @@ yargs(hideBin(process.argv))
   .example("hipe <dir> [<options>]", "")
   .example(
     "hipe ./src --output ./dist",
-    "generates files from `src` directory to `dist`"
+    "generates files from `src` directory to `dist`",
   )
   .example(
     "hipe ./src --output ./dist --comment",
-    "generates files from `src` directory to `dist` and leaves comments"
+    "generates files from `src` directory to `dist` and leaves comments",
   )
   .demandCommand()
   .parse();

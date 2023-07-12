@@ -51,8 +51,8 @@ export class Finder {
       console.warn(
         `${Dyer.strToRed("×")} FINDER: Directory \`${this._dir}\` ${Dyer.str(
           "not found",
-          true
-        )}`
+          true,
+        )}`,
       );
       return;
     }
